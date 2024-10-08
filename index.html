@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторна робота 3.1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .date-info {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Демонстрація вбудованих функцій об'єкта Date</h1>
+
+    <div class="date-info">
+        <strong>Поточна дата:</strong> <span id="currentDate"></span>
+    </div>
+    <div class="date-info">
+        <strong>Поточний час:</strong> <span id="currentTime"></span>
+    </div>
+    <div class="date-info">
+        <strong>Кількість днів до нового року:</strong> <span id="daysToNewYear"></span>
+    </div>
+
+    <h2>Обчислення різниці між датами</h2>
+    <label for="userDate">Введіть дату (YYYY-MM-DD):</label>
+    <input type="date" id="userDate" />
+    <button onclick="calculateDifference()">Обчислити різницю</button>
+    
+    <div class="date-info">
+        <strong>Різниця в днях:</strong> <span id="dateDifference"></span>
+    </div>
+
+    <script>
+        "use strict";
+
+        const currentDate = new Date();
+
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('uk-UA', options);
+
+        const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        document.getElementById('currentTime').textContent = currentDate.toLocaleTimeString('uk-UA', timeOptions);
+
+        const nextYear = new Date(currentDate.getFullYear() + 1, 0, 1);
+        const timeDifference = nextYear - currentDate;
+        const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        document.getElementById('daysToNewYear').textContent = daysDifference;
+
+        function calculateDifference() {
+            const userDateInput = document.getElementById('userDate').value;
+            if (!userDateInput) {
+                document.getElementById('dateDifference').textContent = "Будь ласка, введіть дату.";
+                return;
+            }   
+            
+            const userDate = new Date(userDateInput);
+            const differenceInTime = userDate - currentDate;
+            const differenceInDays = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
+            document.getElementById('dateDifference').textContent = differenceInDays;
+        }
+    </script>
+</body>
+</html>
